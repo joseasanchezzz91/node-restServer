@@ -14,8 +14,8 @@ process.env.NODE_ENV = process.env.NODE_ENV || "dev";
 //60 segundos
 //60 minutis
 //24 horas
-//30 días
-process.env.EXPIRED_TOKEN = 60 * 60 * 24 * 30;
+//30 días'
+process.env.EXPIRED_TOKEN = '48h';
 
 //=========================
 //SEED TOKEN

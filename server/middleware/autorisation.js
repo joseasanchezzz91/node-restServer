@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 
-let verifyToke = (req, res, next) =>{
+let verifyToken = (req, res, next) =>{
     const token = req.get('token');
 
     jwt.verify(token, process.env.SEED_TOKEN, (err,decode) =>{
@@ -42,6 +42,6 @@ let verifyRole = (req, res, next) =>{
 }
 
 module.exports = {
-    verifyToke,
+    verifyToken,
     verifyRole
 }

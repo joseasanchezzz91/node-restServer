@@ -2,16 +2,16 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const _ = require("underscore");
 const app = express();
-const {verifyToke , verifyRole} = require('../middleware/autorisation');
+const {verifyToken , verifyRole} = require('../middleware/autorisation');
 
 const User = require("../models/user");
-const { verify } = require("jsonwebtoken");
+
 
 app.get("/", (req, res) => {
   res.json("hello world");
 });
 
-app.get("/users",verifyToke ,(req, res) => {
+app.get("/users",verifyToken ,(req, res) => {
   let limit = req.query.limit || 5;
   limit = Number(limit);
   let since = req.query.since || 0;
@@ -37,7 +37,7 @@ app.get("/users",verifyToke ,(req, res) => {
     });
 });
 
-app.post("/users",[verifyToke,verifyRole], (req, res) => {
+app.post("/users",[verifyToken,verifyRole], (req, res) => {
   let body = req.body;
 
   let user = new User({
@@ -62,7 +62,7 @@ app.post("/users",[verifyToke,verifyRole], (req, res) => {
   });
 });
 
-app.put("/users/:id", [verifyToke,verifyRole], (req, res) => {
+app.put("/users/:id", [verifyToken,verifyRole], (req, res) => {
   let id = req.params.id;
   let body = _.pick(req.body, ["name", "email", "state", "img", "role"]);
 
@@ -86,7 +86,7 @@ app.put("/users/:id", [verifyToke,verifyRole], (req, res) => {
   );
 });
 
-app.delete("/users/:id",[verifyToke,verifyRole] ,(req, res) => {
+app.delete("/users/:id",[verifyToken,verifyRole] ,(req, res) => {
   let id = req.params.id;
   User.findByIdAndUpdate(id, { state: false }, { new: true }, (err, user) => {
     if (err) {
